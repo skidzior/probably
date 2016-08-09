@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\theoremstyle{definition}
+\newtheorem*{solution}{Solution}
+
+\begin{document}
+
+\section{Task one}
+Slot machine $3 \times 3$ is given, with following reel strips:
+\begin{enumerate}
+\item A B C B D E A A B D E C B D A B D E
+\item E D E B C A B E D A B C D E A A B B B D D D C E D A D
+\item B B D E A E D A C B E A B D E A C D
+\end{enumerate}
+
+On every spin of the slot machine, a random position for each reel is chosen and a reel stops in this position. Player bets 1 credit before every spin. One central horizontal payline is active. Player wins if the following combinations appear on the payline: 
+AAA$\rightarrow 100$, BBB$\rightarrow 80$, CCC$\rightarrow 60$, DDD$\rightarrow 40$, EEE$\rightarrow 20$, ABC$\rightarrow 10$, EDC$\rightarrow 5$. \\
+Calculate theoretical payback of this slot machine.
+
+\begin{solution}
+Let $p_i(K)$ be probability of getting $K$ on reel $i$. Then:
+\begin{align*}
+p_1(A) &= {^4}/_{18},\quad &&p_1(B) = {^5}/_{18},\quad &&p_1(C) = {^2}/_{18},\quad &&p_1(D) = {^4}/_{18},\quad &&p_1(E) = {^3}/_{18}, \\
+p_2(A) &= {^5}/_{27},\quad &&p_2(B) = {^6}/_{27},\quad &&p_2(C) = {^3}/_{27},\quad &&p_2(D) = {^8}/_{27},\quad &&p_2(E) = {^5}/_{27}, \\
+p_3(A) &= {^2}/_{9},\quad &&p_3(B) = {^2}/_{9},\quad &&p_3(C) = {^1}/_{9},\quad &&p_3(D) = {^2}/_{9},\quad &&p_3(E) = {^2}/_{9}.
+\end{align*}
+Results on each reels are independent, so
+$$ p(XYZ) = p_1(X) \times p_2(Y) \times p_3(Z),\text{ where }X,Y,Z \in \{A, B, C, D, E\}.$$
+The expected payback of this slot machine ($X$) can be calculated as follows:
+\begin{align*}
+\textbf{E}[X] =&& 100&\times p(AAA) + 80\times p(BBB) + 60\times p(CCC) + 40\times p(DDD) \\
++&& 20&\times p(EEE) + 10\times p(ABC) + 5\times p(EDC) - 1\\
+=&& 100&\times p_1(A)\times p_2(A) \times p_3(A) + 80\times p_1(B)\times p_2(B) \times p_3(B) 
+\\+&& 60&\times p_1(C)\times p_2(C) \times p_3(C) + 40\times p_1(D)\times p_2(D) \times p_3(D) 
+\\+&& 20&\times p_1(E)\times p_2(E) \times p_3(E) + 10\times p_1(A)\times p_2(B) \times p_3(C) \\
++&& 5&\times p_1(E)\times p_2(D) \times p_3(C) - 1\\
+=&& \Big(100&\times4\times5\times2 + 80\times5\times6\times2 + 60\times2\times3\times1 + 40\times4\times8\times2 \\
++&& 20&\times3\times5\times2 + 10\times4\times6\times1 + 5\times3\times8\times1 \Big) \times \Big({^1}/_{18} \times {^1}/_{27} \times {^1}/_{9}\Big) -1\\
+=&& \Big(4000& + 4800 + 360 + 2560 + 600 + 240 + 120 \Big) \times 
+\Big(18\times27\times9\Big)^{-1} - 1\\
+=&& 12680& / 4374 - 1 \approx 1.8989
+\end{align*}
+
+
+\end{solution}
+\end{document}
