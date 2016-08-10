@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\theoremstyle{definition}
+\newtheorem*{solution}{Solution}
+
+\begin{document}
+
+\section{Task three}
+Random number generator generates a sequence of random numbers between 0 and 100. 
+\begin{itemize}
+\item Player bets 10 credits before every new number is generated. 
+\item Player wins 20 credits if a random number is in a range [25, 40]. 
+\item If a random number is in a range [45, 60] the price for the next 10 rounds is only 5 credits. 
+\end{itemize}
+Calculate theoretical payback of this game. 
+
+\begin{solution}
+Each number is generated independently, so probability of winning $p(W)$ is the same in each round, so is probability of getting a discount $p(D)$, both equal to ${^{16}}/_{101}$. \\
+Expected cost $C_i$ of round $i$-indexed, depends on whether an outcome of at least one of previous 10 rounds (if $i \leq 10$, then outcome of at least one of previous $i-1$ rounds) was in range [45, 60] - if yes, than it's 5 credits, if no - 10 credits. Let $D'$ be complement of $D$. Then $C_i$ can be represented as follows:
+\begin{align*}
+C_i = 
+  \begin{cases}
+    10\times p(D')^{i-1} + 5\times \big( 1 - p(D')^{i-1} \big)   & \quad \text{if } i \leq 10\\
+    10\times p(D')^{10}  + 5\times \big( 1 - p(D')^{10}  \big)   & \quad \text{if } i > 10\\
+  \end{cases}
+\end{align*}
+
+So, expected payback of this game can be represented by an equation:
+\begin{align*}
+E[P_n] = n \times 20\times p(W) - \sum_{i=1}^{n} C_i \text{, where } n \text{ - number of rounds}
+\end{align*}
+
+With infinite number of rounds, expected payback per round can be calculated as follows:
+\begin{align*}
+E[P] &= \lim_{n \rightarrow \infty} \Bigg(\cfrac{n \times 20\times p(W) - \sum_{i=1}^{n} C_i}{n} \Bigg) 
+= \lim_{n \rightarrow \infty} \Bigg(20p(W) - \bigg(\tfrac{1}{n}\sum_{i=1}^{10} C_i + \tfrac{(n-10)}{n}C_{11} \bigg)\Bigg) \\
+&= \lim_{n \rightarrow \infty}20p(W) - \lim_{n \rightarrow \infty} \tfrac{1}{n}\sum_{i=1}^{10} C_i - \lim_{n \rightarrow \infty} \tfrac{(n-10)}{n}C_{11} \\
+&= 20p(W) - C_{11} 
+= \cfrac{320}{101} - \bigg( 10\times\big( {^{85}}/_{101} \big)^{10} + 5\times \Big(1 - \big( {^{85}}/_{101} \big)^{10}\Big)\bigg) \approx -2.7228
+\end{align*}
+
+\end{solution}
+\end{document}
