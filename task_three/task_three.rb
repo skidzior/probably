@@ -1,19 +1,25 @@
-win = 0
-discount_i = 0
+class Game
+  def initialize
+    @discount_i = 0
+  end
 
-(10**6).times do
-  hit = (0..100).to_a.sample
-  win -= (discount_i > 0 ? 5 : 10)
-  discount_i -= 1 if discount_i > 0
+  def generate
+    hit = (0..100).to_a.sample
+    cost = (@discount_i > 0 ? -5 : -10)
+    @discount_i -= 1 if @discount_i > 0
 
-  case
-  when (25..40).include?(hit) then win += 20
-  when (45..60).include?(hit) then discount_i = 10
+    case
+    when (25..40).include?(hit) then cost += 20
+    when (45..60).include?(hit) then @discount_i = 10
+    end
+
+    cost
   end
 end
 
-puts "win - #{win/1000000.0}"
+win = 0
+game = Game.new
 
+(10**6).times { win += game.generate }
 
-x = 20 * 16/101.0 - ( 10 * ((85/101.0)**10) + 5 * (1 - ((85/101.0)**10)) )
-
+puts "Winning in 1,000,000 rounds - #{win} credits. Average winning - #{Float(win)/(10**6)}."
